@@ -1,6 +1,4 @@
 # Next.js Dashboard Project
-
-## Proje Açıklaması
 Bu proje, **Next.js** kullanılarak bir **dashboard** uygulaması geliştirilmiştir. 
 - **Ana Sayfa (Dashboard)**: MongoDB'den çekilen verilerle oluşturulmuş grafikler yer alıyor.
 - **CSV Yükleme Sayfası**: Kullanıcı bir CSV dosyası yükleyerek verileri MongoDB'ye kaydedebiliyor.
@@ -46,7 +44,7 @@ yarn dev
 - **MongoDB'den çekilen verileri grafik olarak görüntülüyor.**
 - **Recharts** kullanılarak görselleştiriliyor.
 
-### 2️⃣ CSV Yükleme Sayfası (/upload)
+### 2️⃣ CSV Yükleme Sayfası (/import)
 - **CSV dosyası seçilip yüklendiğinde**, satırlar MongoDB'ye kaydediliyor.
 - **PapaParse** kullanılarak CSV dosyası okunuyor.
 
@@ -72,10 +70,10 @@ yarn dev
 ```
 
 ## API Endpointler
-| Metod | Endpoint  | Açıklama |
-|--------|----------|----------|
-| GET    | `/api/data` | MongoDB'den veri çekiyor |
-| POST   | `/api/upload` | CSV verisini MongoDB'ye kaydediyor |
+| Metod | Açıklama |
+|--------|----------|
+| GET    | MongoDB'den veri çekiyor |
+| POST   | CSV verisini MongoDB'ye kaydediyor |
 
 ## Katkıda Bulunma
 Eğer projeye katkıda bulunmak istiyorsanız:
