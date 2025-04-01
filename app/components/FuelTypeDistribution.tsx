@@ -27,7 +27,12 @@ interface FuelData {
   percentage: number;
 }
 
-const CustomTooltip = ({ active, payload }: any) => {
+interface TooltipProps {
+  active?: boolean;
+  payload?: { payload: FuelData }[];
+}
+
+const CustomTooltip = ({ active, payload }: TooltipProps) => {
   if (active && payload && payload.length && payload[0].payload) {
     const data = payload[0].payload;
     const percentage = Number(data.percentage || 0);
@@ -47,12 +52,12 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-const CustomLegend = ({ payload }: any) => {
+const CustomLegend = ({ payload }:{ payload?: { color: string; value: string; payload: FuelData }[] }) => {
   if (!payload) return null;
 
   return (
     <div className="flex flex-col gap-3">
-      {payload.map((entry: any, index: number) => {
+      {payload.map((entry, index) => {
         if (!entry || !entry.payload) return null;
         const percentage = Number(entry.payload.percentage || 0);
         const change = Number(entry.payload.change || 0);

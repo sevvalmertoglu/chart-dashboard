@@ -40,7 +40,6 @@ export default function TankStatus() {
   const radius = 160;
   const strokeWidth = 20;
   const normalizedRadius = radius - strokeWidth / 2;
-  const circumference = normalizedRadius * Math.PI;
 
   const createArc = (startAngle: number, endAngle: number) => {
     const start = polarToCartesian(180, 180, normalizedRadius, startAngle);
@@ -136,8 +135,8 @@ export default function TankStatus() {
           </svg>
           <div className="absolute bottom-12 flex flex-col items-center justify-center">
             <span className="text-6xl font-bold text-[#1e1c39]">{selectedTankData.value}%</span>
-            <span className="text-gray-500 mt-4">{selectedTank}'s fill rate is</span>
-            <span className="text-gray-400 mt-2">Updated {new Date(selectedTankData.lastUpdate).toLocaleDateString()}</span>
+            <span className="text-gray-500 mt-4">{selectedTank}&apos;s fill rate is</span>
+            <span className="text-gray-400 mt-2">Updated {new Date(selectedTankData.lastUpdate).toLocaleDateString('en-GB')}</span>
           </div>
         </div>
       </CardContent>

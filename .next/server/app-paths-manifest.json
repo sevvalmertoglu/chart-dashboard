@@ -1,7 +1,8 @@
 {
-  "/api/tank-status/route": "app/api/tank-status/route.js",
-  "/api/stats/route": "app/api/stats/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/sales/route": "app/api/sales/route.js",
+  "/api/tank-status/route": "app/api/tank-status/route.js",
   "/api/fuel-distribution/route": "app/api/fuel-distribution/route.js",
+  "/api/stats/route": "app/api/stats/route.js",
   "/page": "app/page.js"
 }

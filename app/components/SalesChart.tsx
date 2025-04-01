@@ -15,18 +15,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { SVGProps } from 'react';
 
 type TimeRange = 'daily' | 'weekly' | 'monthly';
 type FuelType = 'all' | 'Diesel' | 'Ad Blue' | 'Super E5' | 'Super E10' | 'Cleaning';
 
 interface SaleData {
   _id: string;
-  displayName: string;
-  Diesel: number;
-  'Ad Blue': number;
-  'Super E5': number;
-  'Super E10': number;
-  Cleaning: number;
+  displayName?: string;
+  Diesel?: number;
+  'Ad Blue'?: number;
+  'Super E5'?: number;
+  'Super E10'?: number;
+  Cleaning?: number;
 }
 
 const fuelTypes = [
@@ -103,14 +104,14 @@ export default function SalesChart() {
         const salesData = await res.json();
         console.log('Received data:', salesData);
 
-        const transformedData = salesData.map((item: any) => ({
+        const transformedData = salesData.map((item: SaleData) => ({
           _id: item._id,
           displayName: timeRange === 'weekly' ? weekDays[0] : item._id,
-          'Diesel': item.Diesel || 0,
-          'Ad Blue': item['Ad Blue'] || 0,
-          'Super E5': item['Super E5'] || 0,
-          'Super E10': item['Super E10'] || 0,
-          'Cleaning': item.Cleaning || 0
+          Diesel: item.Diesel ?? 0,
+          'Ad Blue': item['Ad Blue'] ?? 0,
+          'Super E5': item['Super E5'] ?? 0,
+          'Super E10': item['Super E10'] ?? 0,
+          Cleaning: item.Cleaning ?? 0
         }));
 
         setData(transformedData);
@@ -208,7 +209,7 @@ export default function SalesChart() {
                   angle: timeRange === 'daily' ? -45 : 0,
                   textAnchor: timeRange === 'daily' ? 'end' : 'middle',
                   dy: timeRange === 'daily' ? 8 : 0
-                }}
+                } as SVGProps<SVGTextElement>}
                 interval={0}
                 tickFormatter={formatXAxisTick}
                 padding={{ left: 10, right: 10 }}

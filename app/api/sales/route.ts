@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/app/lib/db';
 import Sale from '@/app/models/Sale';
+import { PipelineStage } from 'mongoose';
 
 export async function GET(request: Request) {
   try {
@@ -8,6 +9,7 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const timeRange = searchParams.get('timeRange') || 'weekly';
+    const fuelType = searchParams.get('fuelType') || 'all';
 
     const startDate = new Date('2023-01-01');
     const endDate = new Date('2024-12-31');
@@ -29,13 +31,14 @@ export async function GET(request: Request) {
         groupBy = { $dateToString: { format: '%Y-W%V', date: '$date' } };
     }
 
-    const pipeline = [
+    const pipeline: PipelineStage[] = [
       {
         $match: {
           date: {
             $gte: startDate,
             $lte: endDate
-          }
+          },
+          ...(fuelType !== 'all' && { fuelType })
         }
       },
       {

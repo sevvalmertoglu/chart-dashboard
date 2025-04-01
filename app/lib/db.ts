@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -6,11 +6,17 @@ if (!MONGODB_URI) {
   throw new Error('MONGODB_URI is not defined in environment variables');
 }
 
-let cached = (global as any).mongoose;
-
-if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+interface GlobalMongoose {
+  conn: Connection | null;
+  promise: Promise<Connection> | null;
 }
+
+declare global {
+  // eslint-disable-next-line no-var
+  var mongoose: GlobalMongoose | undefined;
+}
+
+const cached: GlobalMongoose = global.mongoose ?? { conn: null, promise: null };
 
 async function connectDB() {
   if (cached.conn) {
@@ -26,7 +32,7 @@ async function connectDB() {
     console.log('MongoDB bağlantısı başlatılıyor...');
     cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
       console.log('MongoDB bağlantısı başarılı!');
-      return mongoose;
+      return mongoose.connection;
     }).catch((error) => {
       console.error('MongoDB bağlantı hatası:', error);
       throw error;
@@ -35,6 +41,7 @@ async function connectDB() {
 
   try {
     cached.conn = await cached.promise;
+    global.mongoose = cached;
     return cached.conn;
   } catch (error) {
     cached.promise = null;

@@ -58,7 +58,7 @@ export default function ImportPage() {
           href="/" 
           className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
         >
-          Dashboard'a Dön
+          Dashboard&apos;a Dön
         </Link>
       </div>
 
