@@ -5,6 +5,9 @@ import { PipelineStage } from 'mongoose';
 
 export async function GET(request: Request) {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     await connectDB();
 
     const { searchParams } = new URL(request.url);
@@ -51,11 +54,12 @@ export async function GET(request: Request) {
         }
       },
       {
-        $sort: { _id: 1 }
+        $sort: { '_id': 1 }
       }
     ];
 
-    const sales = await Sale.aggregate(pipeline);
+    const sales = await Sale.aggregate(pipeline).exec();
+    clearTimeout(timeoutId);
 
     if (timeRange === 'weekly') {
       const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -67,8 +71,16 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json(sales);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Sales API Error:', error);
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        return NextResponse.json(
+          { error: 'İstek zaman aşımına uğradı' },
+          { status: 504 }
+        );
+      }
+    }
     return NextResponse.json(
       { error: 'Satış verileri alınırken bir hata oluştu' },
       { status: 500 }

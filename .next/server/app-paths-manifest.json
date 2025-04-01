@@ -1,8 +1,12 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/sales/route": "app/api/sales/route.js",
-  "/api/tank-status/route": "app/api/tank-status/route.js",
   "/api/fuel-distribution/route": "app/api/fuel-distribution/route.js",
+  "/api/sales/route": "app/api/sales/route.js",
   "/api/stats/route": "app/api/stats/route.js",
+  "/api/tank-status/route": "app/api/tank-status/route.js",
+  "/api/import/route": "app/api/import/route.js",
+  "/api/weekly-sales/route": "app/api/weekly-sales/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/import/page": "app/import/page.js",
   "/page": "app/page.js"
 }
